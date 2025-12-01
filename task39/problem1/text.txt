@@ -1,0 +1,34 @@
+public class App {
+  final static int START_COUNTER;
+  static {
+    START_COUNTER = Integer.parseInt("Y-");
+  }
+  public static void main(String[] args) {
+    System.out.println("Hello");
+  }
+}
+
+Анализ
+
+    final static int START_COUNTER;
+    Объявляется константа класса, которая должна быть инициализирована до завершения статического блока.
+
+    static { START_COUNTER = Integer.parseInt("Y-"); }
+
+    В статическом блоке пытаемся преобразовать строку "Y-" в целое число с помощью Integer.parseInt("Y-").
+    Метод Integer.parseInt() ожидает корректное числовое значение (например "123"), иначе выбрасывается NumberFormatException.
+    Статический блок выполняется при загрузке класса
+    До вызова main() JVM загружает класс App и выполняет все статические инициализации.
+    Поскольку "Y-" не является числом, произойдет NumberFormatException.
+
+Результат
+
+    Программа не достигнет метода main.
+    Сообщение "Hello" не будет выведено.
+    Консоль выведет Exception in thread "main" java.lang.NumberFormatException: For input string: "Y-".
+
+Вывод
+
+    Статические блоки выполняются при загрузке класса.
+    Ошибка в статическом блоке останавливает загрузку класса, и метод main() не выполняется.
+    final static переменная не успевает корректно инициализироваться, но главное — исключение NumberFormatException прерывает выполнение.
